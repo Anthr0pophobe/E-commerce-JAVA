@@ -1,63 +1,35 @@
 import React from "react";
 import ItemCard from "./src/components/ItemCard";
-const items = [
-  {
-    id: 1,
-    name: 'Ayoub',
-    img: 'https://pbs.twimg.com/profile_images/1575486829356122115/K9zDF6YG_400x400.jpg'
-  },
-  {
-    id: 2,
-    name: 'Mael',
-    img: 'https://pbs.twimg.com/profile_images/1575486829356122115/K9zDF6YG_400x400.jpg'
-  },
-  {
-    id: 3,
-    name: 'Ahmed',
-    img: 'https://pbs.twimg.com/profile_images/1575486829356122115/K9zDF6YG_400x400.jpg'
-  },
-  {
-    id: 4,
-    name: 'Khais',
-    img: 'https://pbs.twimg.com/profile_images/1575486829356122115/K9zDF6YG_400x400.jpg'
-  },
-  {
-    id: 5,
-    name: 'Nafise',
-    img: 'https://pbs.twimg.com/profile_images/1575486829356122115/K9zDF6YG_400x400.jpg'
-  },
-  {
-    id: 6,
-    name: 'Samy',
-    img: 'https://pbs.twimg.com/profile_images/1575486829356122115/K9zDF6YG_400x400.jpg'
-  },
-  {
-    id: 7,
-    name: 'Marine',
-    img: 'https://pbs.twimg.com/profile_images/1575486829356122115/K9zDF6YG_400x400.jpg'
-  },
-  {
-    id: 8,
-    name: 'Samina',
-    img: 'https://pbs.twimg.com/profile_images/1575486829356122115/K9zDF6YG_400x400.jpg'
-  },
-  {
-    id: 9,
-    name: 'Jonas',
-    img: 'https://pbs.twimg.com/profile_images/1575486829356122115/K9zDF6YG_400x400.jpg'
-  },
-  {
-    id: 10,
-    name: 'Marc',
-    img: 'https://pbs.twimg.com/profile_images/1575486829356122115/K9zDF6YG_400x400.jpg'
-  }
-];
+import React, { useState, useEffect } from 'react';
+
+
 
 export default function Home() {
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    // Fonction de récupération des données depuis l'API externe
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:8097/sakilamdb/products');
+        const jsonData = await response.json();
+        setData(jsonData);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des données :', error);
+      }
+    };
+
+    fetchData(); // Appel de la fonction fetchData lors du montage du composant
+
+    // Nettoyage : fonction exécutée lors du démontage du composant
+    return () => {
+      // Effectuer des actions de nettoyage si nécessaire
+    };
+  }, []); // [] signifie que useEffect s'exécutera uniquement une fois, lors du montage initial
+
   return (
     <div className='h-full'>
-      <div className="grid grid-cols-3 gap-2 px-4 pt-8">
-        {items.map((item)=>(ItemCard(item)))}
+      <div className="grid grid-cols-4 gap-2 px-4 pt-8">
+        {data.map((item)=>(ItemCard(item)))}
       </div>
     </div>
   );

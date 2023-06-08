@@ -5,7 +5,7 @@ const NavBar = () => {
   return (
     <div className='h-full p-4 w-full bg-blue-400 flex justify-end'>
       <div className='flex'>
-      <Link href="/panier">
+      <Link href="/pages/panier">
         <div className='bg-red-500 p-4 rounded ml-4'>
           <p>Panier</p>
         </div>
